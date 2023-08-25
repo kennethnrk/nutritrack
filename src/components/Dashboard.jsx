@@ -10,12 +10,21 @@ import RechartPieyo from "../subcomponenets/RechartPieyo";
 import Accordion from 'react-bootstrap/Accordion';
 import { food } from "../subcomponenets/const";
 
+
+
 function Dashboard(props) {
     const itemAttributes = ['calories', 'total_fat', 'protein', 'carbohydrate', 'fiber', 'sugars', 'sodium', 'calcium',]
+
+    const [filteredFood, setfiltered] = useState( food );
 
     const formReducer = (currentState, action) => {
         return { ...currentState, [action.type]: action.value }
     }
+    const filterFood = (keyword) =>
+    {
+        return(food.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase())));
+    }
+
 
     const [goal, setGoal] = useState({
         set: false,
@@ -195,12 +204,16 @@ function Dashboard(props) {
                     <Inputbox type="text"
                               className="form-control"
                               placeholder="Search for Foods"
+                              onChange={(keyword)=>{
+                                  setfiltered(filterFood(keyword.target.value))
+
+                              }}
 
                     />
                 </div><Accordion>
 
-                {food.map(
-                    (item, key)=>
+                {filteredFood.map(
+                    (item)=>
                     {
                         return(
                             <Accordion.Item eventKey={item.name}>

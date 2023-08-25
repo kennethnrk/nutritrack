@@ -82,3 +82,11 @@ def setgoal(user: UserGoal):
 def getfood():
     food = json_util.dumps(list(db.items.find())[0:10])
     return {"success": True, "food": food}
+
+@app.post("/delgoal")
+def delgoal(user: UserOnly):
+    db.users.update_one(
+        {"username": user.username},
+        {"$unset": {"goal": {}}},
+    )
+    return {"success": True}

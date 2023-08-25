@@ -53,3 +53,12 @@ export const getFood = async()=>{
     }
 }
 
+export const delGoal = async(payload)=>{
+    try {
+        const response = await axiosInstance.post('delgoal',payload)
+        return response.data
+
+    } catch (error) {
+        return error.response.data
+    }
+}

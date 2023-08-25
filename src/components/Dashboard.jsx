@@ -5,7 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import Inputbox from "../subcomponenets/inputbox";
 import Formlabel from "../subcomponenets/formlabel";
 import Thebutton from "../subcomponenets/thebutton";
-import { getFood, getGoal, setGoalPost } from "../apis";
+import { delGoal, getGoal, setGoalPost } from "../apis";
 import RechartPieyo from "../subcomponenets/RechartPieyo";
 import Accordion from 'react-bootstrap/Accordion';
 import { food } from "../subcomponenets/const";
@@ -77,6 +77,32 @@ function Dashboard(props) {
                             ...payload.goal
                         }
                     )
+                }
+            }
+        )
+
+        setsettingGoal(false)
+    }
+    const deltheGoal = () => {
+        const payload =
+            {
+                'username': localStorage.getItem("username"),
+                'goal': {
+                    'calories': formData.calories,
+                    'total_fat': formData.total_fat,
+                    'protein': formData.protein,
+                    'carbohydrate': formData.carbohydrate,
+                    'fiber': formData.fiber,
+                    'sugars': formData.sugars,
+                    'sodium': formData.sodium,
+                    'calcium': formData.calcium,
+                }
+            }
+
+        delGoal(payload).then(
+            (response) => {
+                if (response.success) {
+                    console.log("cool")
                 }
             }
         )
@@ -195,6 +221,26 @@ function Dashboard(props) {
                             <Col>
                                 <Thebutton text="Cancel" style={{ background: '#c71313' }}
                                            onClick={() => setsettingGoal(false)}/>
+                            </Col>
+                            <Col>
+                                <Thebutton text="Del" style={{ background: '#c71313' }}
+                                           onClick={() =>
+
+                                           {
+                                               deltheGoal()
+                                               setGoal({
+                                                   set: false,
+                                                   'calories': 2000,
+                                                   'total_fat': 100,
+                                                   'protein': 200,
+                                                   'carbohydrate': 400,
+                                                   'fiber': 600,
+                                                   'sugars': 50,
+                                                   'sodium': 5,
+                                                   'calcium': 12,
+                                               })
+                                               setsettingGoal(false)
+                                           }}/>
                             </Col>
                         </Row> : null
                     }
